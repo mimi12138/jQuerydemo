@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>jQuery动画</title>
+    <style>    
+    .left {
+        background: #bbffaa;
+		 width: 500px;
+        height: 50px;
+        padding: 5px;
+        margin: 5px;
+        border: 1px solid #ccc;
+    }
+    
+    .right {
+        background: yellow;
+		 width: 500px;
+        height: 50px;
+        padding: 5px;
+        margin: 5px;
+        border: 1px solid #ccc;
+        display: none;
+    }
+	 .left2 div,
+    .right2 div {
+        width: 100%;
+        height: 50px;
+        padding: 5px;
+        margin: 5px;
+        float: left;
+        border: 1px solid #ccc;
+        display: none;
+    }
+    .left2 div {
+        background: #bbffaa;
+    }
+    
+    .right2 div {
+        background: yellow;
+    }
+	  p{
+            color:red;
+        }
+	  .animate{
+        width:200px; 
+        height: 100px; 
+        background-color: yellow;
+        color:red;
+    }
+	  a {
+        font-size: 30px;
+        font-weight: 900;
+    }
+    </style>
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.js"></script>
+</head>
+<body>
+    <h2>通过toggle切换显示与隐藏</h2>
+    <div class="left">显示到隐藏</div>
+    <div class="right">隐藏到显示</div>
+    <button>直接show-hide动画</button>
+    <button>直接hide-show动画</button>
+    <script type="text/javascript">
+    $("button:first").click(function() {
+        $(".left").toggle(3000)
+    });
+    </script>
+
+    <script type="text/javascript">
+    $("button:eq(1)").click(function() {
+        $(".right").toggle(3000)
+    });
+    </script>
+	<h1>slideDown</h1>
+    <div class="left2">
+        <h4>测试一</h4>
+        <div id="a1">hide-show</div>
+        <button>点击slideDown显示动画</button>
+		 <button>点击slideToggle上下卷滚切换</button>
+    </div>
+        <script type="text/javascript">
+        //点击button
+        //执行3秒隐藏
+        //执行3秒显示
+        $("button:eq(2)").click(function() {
+            $("#a1").slideDown(3000)
+        });
+		 $("button:eq(3)").click(function() {
+            $("#a1").slideToggle(3000)
+        });
+
+        </script>
+    <div class="right2">
+        <h4>测试二</h4>
+        <div id="a2">hide-show</div>
+        <button>点击slideDown执行回调</button>
+    </div>
+        <script type="text/javascript">
+        //点击button
+        //执行3秒隐藏
+        //执行3秒显示
+        $("button:eq(4)").click(function() {
+            $("#a2").slideDown(3000,function(){
+                alert('动画执行结束')
+            })
+        });
+        </script>
+		 <h1>fadeOut</h1>
+    <p>测试文字淡入效果</p>
+    <p>慕课网,专注分享</p>
+    淡出的隐藏效果：
+    <select id="animation">
+        <option value="1">fadeOut( )</option>
+        <option value="2">fadeOut( "slow" )</option>
+        <option value="3">fadeOut( 3000 )</option>
+        <option value="4">fadeOut( 1000, complete )</option>
+        <option value="5">fadeOut( 1000, "linear" )</option>
+        <option value="6">fadeOut( options )</option>
+    </select>
+    
+    <input id="btnFadeOut" type="button" value="点击淡出隐藏" />
+    <input id="btnShow" type="button" value="显示" />
+     <input id="btnFadeSwitch" type="button" value="点击切换显示/隐藏">
+    <script type="text/javascript">
+    //【显示】按钮
+    $("#btnShow").click(function() {
+        $("p").show();
+    });
+
+    //【隐藏】按钮
+    $("#btnFadeOut").click(function() {
+        var v = $("#animation").val();
+        if (v == "1") {
+            $("p").fadeOut();
+        } else if (v == "2") {
+            $("p").fadeOut("slow");
+        } else if (v == "3") {
+            $("p").fadeOut(3000);
+        } else if (v == "4") {
+            $("p").fadeOut(2000, function() {
+                alert("隐藏完毕!");
+            });
+        } else if (v == "5") {
+            $("p").fadeOut(1000, "linear");
+        } else if (v == "6") {
+            $("p").fadeOut({
+                duration: 1000
+            });
+        }
+    });
+	 $("#btnFadeSwitch").click(function() {
+        var v = $("#animation").val();
+        if (v == "1") {
+            $("p").fadeToggle();
+        } else if (v == "2") {
+            $("p").fadeToggle("slow");
+        } else if (v == "3") {
+            $("p").fadeToggle(3000);
+        } else if (v == "4") {
+            $("p").fadeToggle(1000, function() {
+                alert("切换完毕!");
+            });
+        } else if (v == "5") {
+            $("p").fadeToggle(1000, "linear");
+        } else if (v == "6") {
+            $("p").fadeToggle({
+                duration: 1000
+            });
+        }
+    });
+    </script>
+	
+	 <h1>fadeTo</h1>
+    <p>测试文字透明度效果</p>
+    <p>慕课网,专注分享</p>
+    透明度的设置效果：
+    <select id="animation2">
+        <option value="1">fadeTo( "slow" ,0.5 )</option>
+        <option value="2">fadeTo( 1000 ,0.2 )</option>
+        <option value="3">fadeTo( 1000 ,0.9 ,complete)</option>
+    </select>
+    <input id="btnFadetoSwitch" type="button" value="点击切换显示/隐藏">
+    <script type="text/javascript">
+    //【切换显示/隐藏】按钮
+    $("#btnFadetoSwitch").click(function() {
+        var v = $("#animation2").val();
+        if (v == "1") {
+            $("p").fadeTo("slow", 0.5);
+        } else if (v == "2") {
+            $("p").fadeTo(1000, 0.2);
+        } else if (v == "3") {
+            $("p").fadeTo(1000, 0.9, function() {
+                alert('完成')
+            });
+        }
+    });
+    </script>
+	
+	
+	 <h1>animate</h1>
+    <p>慕课网,专注分享</p>
+    <div class="animate" id="aaron">内部动画</div>
+    点击观察动画效果：
+    <select id="animation3">
+        <option value="1">动画1-宽高变300</option>
+        <option value="2">动画2-现有宽高加100</option>
+        <option value="3">动画3-字体变化</option>
+        <option value="4">动画4-通过toggle变化高度</option>
+    </select>
+    <input id="exec" type="button" value="执行动画">
+    <script type="text/javascript">
+    $("#exec").click(function() {
+        var v = $("#animation3").val();
+        var $aaron = $("#aaron");
+        if (v == "1") {
+            // 数值的单位默认是px
+            $aaron.animate({
+                width  :300,
+                height :300
+            });
+        } else if (v == "2") {
+            // 在现有高度的基础上增加100px
+            $aaron.animate({
+                 width  : "+=100px",
+                 height : "+=100px"
+            });
+        } else if (v == "3") {
+            $aaron.animate({
+                fontSize: "5em"
+            }, 2000, function() {
+                alert("动画 fontSize执行完毕!");
+            });
+        } else if (v == "4") {
+            //通过toggle参数切换高度,height是纵向变化，width是横向变化
+            $aaron.animate({
+                height: "toggle"
+            });
+        } 
+    });
+    </script>
+	 <div class="animate" id="aaron2">内部动画</div>
+    点击观察动画效果：
+    <select id="animation4">
+        <option value="1">动画step动画</option>
+        <option value="2">动画progress回调</option>
+    </select>
+    <a></a>
+    <input id="exec2" type="button" value="执行动画">
+    <script type="text/javascript">
+    $("#exec2").click(function() {
+        var v = $("#animation4").val();
+        var $aaron2 = $("#aaron2");
+        if (v == "1") {
+            //观察每一次动画的改变
+            $aaron2.animate({
+                height: '50'
+            }, {
+                duration :2000,
+                //每一个动画都会调用
+                step: function(now, fx) {
+                   $aaron2.text('高度的改变值:'+now)
+                }
+            })
+        } else if (v == "2") {
+            //观察每一次进度的变化
+            $aaron2.animate({
+                height: '50'
+            }, {
+                duration :2000,
+                //每一步动画完成后调用的一个函数，
+                //无论动画属性有多少，每个动画元素都执行单独的函数
+                progress: function(now, fx) {
+                   $aaron2.text('进度:'+arguments[1])
+                    // var data = fx.elem.id + ' ' + fx.prop + ': ' + now;
+                    // alert(data)
+                }
+            })
+        } 
+    });
+    </script>
+	
+	
+	  <h1>stop</h1>
+    <p>慕课网,专注分享</p>
+	 <input id="exec3" type="button" value="执行动画"><br /><br />
+
+	 <input id="stop" type="button" value="停止动画">
+    <div class="animate" id="aaron3">内部动画</div>
+   
+    点击观察动画效果：
+    <select id="animation5">
+        <option value="1">stop()</option>
+        <option value="2">stop(true)</option>
+        <option value="3">stop(true,true)</option>
+    </select>
+    <a></a>
+   
+    <script type="text/javascript">
+
+    //点击执行动画
+    $("#exec3").click(function(){
+        $("#aaron3").animate({
+            height: 300
+        }, 5000)
+        $("#aaron3").animate({
+            width: 300
+        }, 5000)
+        $("#aaron3").animate({
+            opacity: 0.2
+        }, 2000)
+    })
+
+    $("#stop").click(function() {
+        var v = $("#animation5").val();
+        var $aaron3 = $("#aaron3");
+        if (v == "1") {
+            //当前当前动画
+            $aaron3.stop()
+        } else if (v == "2") {
+            //停止所以队列
+            $aaron3.stop(true)
+        } else if (v == "3") {
+            //停止动画，直接跳到当前动画的结束
+            $aaron3.stop(true,true)
+        } 
+    });
+    </script>
+	
+	
+	 <h2>each方法</h2>
+    <p>慕课网,专注分享</p>
+    <div class="animate" id="aaron4"></div>
+    点击观察结果：
+    <select id="animation6">
+        <option value="1">each数组</option>
+        <option value="2">each对象</option>
+    </select>
+    <input id="exec4" type="button" value="执行动画">
+    <script type="text/javascript">
+    $("#exec4").click(function() {
+        var v = $("#animation6").val();
+        var $aaron4 = $("#aaron4");
+        $aaron4.empty();//清空div
+        if (v == "1") {
+
+            // 遍历数组元素
+            $.each(['Aaron', '慕课网'], function(i, item) {
+                $aaron4.append("索引=" + i + "; 元素=" + item);
+            });
+        } else if (v == "2") {
+            // 遍历对象属性
+            $.each({
+                name: "张三",
+                age: 18
+            }, function(property, value) {
+                $aaron4.append("属性名=" + property + "; 属性值=" + value);
+            });
+        } 
+    });
+    </script>
+	
+	 <h1>trim方法</h1>
+    未处理
+    <input type="text" name="" id="results1" value=" 前后留空 " />
+    <input id="exec1" type="button" value="点击执行"> <br />
+    
+    trim处理
+    <input type="text" name="" id="results2" value=" 前后留空 " />
+    <input id="exec2" type="button" value="点击执行">
+    <script type="text/javascript">
+    $("#exec1").click(function() {
+        alert("值的长度：" + $("#results1").val().length)
+    });
+
+    $("#exec2").click(function() {
+         alert("值的长度：" + $.trim($("#results2").val()).length)
+    });
+    </script>
+	
+	
+	 <h1>get方法</h1>
+
+    <div class="animate" id="aaron5">
+        <a>1</a>
+        <a>2</a>
+        <a>3</a>
+        <a>4</a>
+        <a>5</a>
+    </div>
+
+    <select id="animation7">
+        <option value="1">get正数索引参数</option>
+        <option value="2">get负数索引参数</option>
+    </select>
+    <input id="exec5" type="button" value="点击执行">
+    <script type="text/javascript">
+    $("#exec5").click(function() {
+        var v = $("#animation7").val();
+        var $aaron5 = $("#aaron5 a");
+
+        //通过get找到第二个a元素，并修改蓝色字体
+        if (v == "1") {
+           $aaron5.get(1).style.color = "blue"
+        } else if (v == "2") {
+            //通过get找到最后一个a元素，并修改字体颜色
+            $aaron5.get(-1).style.color = "#8A2BE2"
+        }
+    });
+    </script>
+	
+	
+	 <h1>index方法</h1>
+    <ul>
+        <a></a>
+        <a></a>
+        <li id="test1">1</li>
+        <li id="test2">2</li>
+        <li id="test3">3</li>
+    </ul>
+    <ul>
+        <li id="test4">4</li>
+        <li id="test5">5</li>
+        <li id="test6">6</li>
+    </ul>
+    <select id="animation8">
+        <option value="1">index无参数</option>
+        <option value="2">index传递dom</option>
+        <option value="3">index传递jQuery对象</option>
+    </select>
+    <input id="exec6" type="button" value="点击执行">
+    <br />
+    <br /> 索引结果：
+    <span></span>
+    <script type="text/javascript">
+    $("#exec6").click(function() {
+        var v = $("#animation8").val();
+
+        var $span = $("span");
+        $span.empty();
+
+        if (v == "1") {
+            //找到第一个li的同辈节点中的索引位置
+            $span.text($("li").index())
+        } else if (v == "2") {
+
+            //通过传递dom查找
+            $span.text($("li").index(document.getElementById("test5")))
+
+        } else if (v == "3") {
+            //通过传递jQuery对象查找
+            $span.text($("li").index($("#test6")))
+
+        }
+    });
+    </script>
+</body>
+
+</html>

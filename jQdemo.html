@@ -1,0 +1,260 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title></title>
+    <style>
+    .left div,
+    .right div {
+        width: 500px;
+        height: 50px;
+        padding: 5px;
+        margin: 5px;
+        border: 1px solid #ccc;
+    }
+    
+    .left div {
+        background: #bbffaa;
+    }
+    
+    .right div {
+        background: yellow;
+    }
+    
+    select {
+        height: 100px;
+    }
+	em{
+        font-weight: 900;
+        color: red;
+    }
+    </style>
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.js"></script>
+</head>
+
+<body>
+    <h2>submit</h2>
+    <div class="left">
+        <div class="aaron">
+            <form id="target1" action="jQdemo.html">
+                回车键或者点击提交表单： 
+                <input type="text" value="输入新的值" />
+                <input type="submit" value="Go" />
+            </form>
+        </div>
+        <div class="aaron">
+            <form id="target2" action="destination.html">
+                回车键或者点击提交表单,禁止浏览器默认跳转：
+                <input type="text" value="输入新的值" />
+                <input type="submit" value="Go" />
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+    //回车键或者点击提交表单
+    $('#target1').submit(function(e) {
+        alert('捕获提交表达动作,不阻止页面跳转')
+    });
+    //回车键或者点击提交表单,禁止浏览器默认跳转：
+    $('#target2').submit(function() {
+        alert('捕获提交表达动作,阻止页面跳转')
+        return false;
+    });
+    </script>
+	
+	<h2>keydown()与keyup()事件</h2>
+    <div class="left">
+        <h4>测试一</h4>
+        <div class="aaron">监听keydown输入:
+            <input class="target1" type="text" value="" /><br />
+            按下显示输入的值:<em></em>
+        </div>
+        <h4>测试二</h4>
+        <div class="aaron">监听keyup输入:
+            <input class="target2" type="text" value="" /><br />
+            松手显示输入的值:<em></em>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    //监听键盘按键
+    //获取输入的值
+    $('.target1').keydown(function(e) {
+        $("em:first").text(e.target.value)
+    });
+    //监听键盘按键
+    //获取输入的值
+    $('.target2').keyup(function(e) {
+        $("em:eq(1)").text(e.target.value)
+    });
+
+    </script>
+	<h2>keypress()事件</h2>
+    <div class="left">
+        <div class="aaron">监听keypress输入:
+            <input class="target1" type="text" value="" /><br />
+            输入中文测试，无法显示:<em></em>
+        </div>
+    </div>
+    <script type="text/javascript">
+    //监听键盘按键
+    //获取输入的值
+    $('.target1').keypress(function(e) {
+        $("em:eq(2)").text(e.target.value)
+    });
+    </script>
+	<h2>on绑定多事件</h2>
+    <h4>测试一</h4>
+    <div class="left">
+        点击触发：on('click',fn)
+        <div id="test1"></div>
+    </div>
+    <script type="text/javascript">
+    //事件绑定一
+    $("#test1").on('click', function(e) {
+        $(this).text('触发事件：' + e.type)
+    })
+    </script>
+
+
+    <h4>测试二</h4>
+    <div class="left">
+        点击触发：on('mousedown mouseup')
+        <div id="test2"></div>
+    </div>
+    <script type="text/javascript">
+    //多事件绑定一
+    $("#test2").on('mousedown mouseup', function(e) {
+        $(this).text('触发事件：' + e.type)
+    })
+    </script>
+    <h4>测试三</h4>
+    <div class="right">
+        点击触发：on(mousedown:fn1,mouseup:fn2)
+        <div id="test3"></div>
+    </div>
+    <script type="text/javascript">
+    //多事件绑定二
+    $("#test3").on({
+        mousedown: function(e) {
+            $(this).text('触发事件：' + e.type)
+        },
+        mouseup: function(e) {
+            $(this).text('触发事件：' + e.type)
+        }
+    })
+    </script>
+	<h2>删除事件</h2>
+    <h4>测试一</h4>
+    <div class="left">
+        on('mousedown mouseup')
+        <div class="aaron">点击触发</div>
+    </div>
+    <button>点击删除mousedown事件</button>
+    <script type="text/javascript">
+    var n  = 0;
+    //绑定事件
+    $(".aaron:first").on('mousedown mouseup', function(e) {
+        $(this).text( '触发类型:' +  (e.type) + ",次数" + ++n)
+    })
+
+    //删除事件
+    $("button:first").click(function() {
+        $(".aaron:first").off('mousedown')
+    })
+   
+    </script>
+    <h4>测试二</h4>
+    <div class="left">
+        on('mousedown mouseup')
+        <div class="aaron">点击触发</div>
+    </div>
+    <button>点击销毁所有事件off</button>
+    <script type="text/javascript">
+    var n  = 0;
+    //绑定事件
+    $(".aaron:last").on('mousedown mouseup', function(e) {
+        $(this).text( '触发类型:' +  (e.type) + ",次数" + ++n)
+    })
+    //删除事件
+    $("button:last").click(function() {
+        $(".aaron:last").off()
+    })
+    </script>
+	 <h3>事件委托，通过事件对象区别触发元素</h3>
+    <div class="left"  >
+        <div class="aaron" style="height:100px;">
+            <ul>
+                <li>点击：触发一</li>
+                <li>点击：触发二</li>
+                <li>点击：触发三</li>
+                <li>点击：触发四</li>
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        //多事件绑定一
+        $("ul").on('click',function(e){
+           alert('触发的元素是内容是: ' + e.target.textContent)
+        })
+    </script>
+	<h3>事件对象的属性与方法</h3>
+    <div class="left">
+        <div id="content">
+            外层div元素
+            <br />
+            <span style="background: silver;">内层span元素</span>
+            <br /> 外层div元素
+        </div>
+        <br />
+        <div id="msg" style="height:auto;"></div>
+    </div>
+    <script type="text/javascript">
+    //为 <span> 元素绑定 click 事件  
+    $("span").click(function() {
+        $("#msg").html($("#msg").html() + "<p>内层span元素被单击</p>");
+    });
+    //为 Id 为 content 的 <div> 元素绑定 click 事件  
+    $("#content").click(function(event) {
+        $("#msg").html($("#msg").html() + "<p>外层div元素被单击</p>");
+        event.stopPropagation(); //阻止事件冒泡  
+    });
+    //为 <body> 元素绑定 click 事件  
+    $("body").click(function() {
+        $("#msg").html($("#msg").html() + "<p>body元素被单击</p>");
+    });
+    </script>
+	<h2>自定义事件triggerHandler</h2>
+<div class="left">
+    <div id="accident">
+        <a>triggerHandler事件</a>
+        <input type="text" class="input">
+    </div>
+    <button>事件冒泡,触发浏览器默认聚焦行为</button><br><br>
+    <button>不会冒泡，不触发浏览器默认聚焦行为</button>
+</div>
+<script type="text/javascript">
+
+    //给input绑定一个聚焦事件
+    $(".input").on("focus",function(event,title) {
+        $(this).val(title)
+    });
+
+    $("#accident").on("click",function() {
+        alert("trigger触发的事件会在 DOM 树中向上冒泡");
+    });
+    //trigger触发focus
+    $("button:first").click(function() {
+        $("a").trigger("click");
+        $(".input").trigger("focus");
+    });
+    //triggerHandler触发focus
+    $("button:last").click(function() {
+        $("a").triggerHandler("click");
+        $(".input").triggerHandler("focus","没有触发默认聚焦事件");
+    });
+</script>
+</body>
+</html>
